@@ -1,4 +1,4 @@
-## (front-end) YGOINFO
+# Pokepedia
 
 Pokepedia es una aplicación hecha en Ionic (Angular, TypeScript, Sass/Css, Html, Rxjs, Ngrx).
 API publica PokeApi (https://pokeapi.co/about)
@@ -19,11 +19,39 @@ API publica PokeApi (https://pokeapi.co/about)
 <hr>
 <img src="https://github.com/crislaez/Pokepedia/blob/master/src/assets/images/pokepedia_8.jpg" />
 <hr>
+<img src="https://github.com/crislaez/Pokepedia/blob/master/src/assets/images/pokepedia_9.jpg" />
+<hr>
 
 
 ### Que hace el proyecto
 
-Pokepedia es una aplicación hecha en Ionic con la información de todos los pokemon, tipos de movimientos, tipos elementales y abilidades. Tambien tiene buscadores y filtro por pokedex (En construcción)...
+Pokepedia es una aplicación hecha en Ionic con la información de todos los pokemon, tipos de movimientos, tipos elementales y habilidades. Tambien tiene buscadores y filtro por pokedex (En construcción)...
+
+### Versiones
+
+### 1.0
+
+Release date: Abril 22, 2022
+
+- Listado pokemons.
+- Destalles pokemon.
+- Listado tipos.
+- Destalles tipo.
+- Listado movimientos.
+- Destalles movimiento.
+
+
+### Roadmap
+
+- [ ] Listado pokemons.
+- [ ] Destalles pokemon.
+- [ ] Listado tipos.
+- [ ] Destalles tipo.
+- [ ] Listado movimientos.
+- [ ] Destalles movimiento.
+- [ ] Listado habilidades.
+- [ ] Destalles habilidad.
+- [ ] Test.
 
 ### Donde pueden recibir ayuda los usuarios con el proyecto
 
@@ -31,4 +59,4 @@ Correo de contacto crislaez30@gmail.com
 
 ### Quien mantiene y construye el proyecto
 
-Yo mismo
+Yo mismo (crislaez)
