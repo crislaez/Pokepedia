@@ -43,12 +43,12 @@ Release date: Abril 22, 2022
 
 ### Roadmap
 
-- [ ] Listado pokemons.
-- [ ] Destalles pokemon.
-- [ ] Listado tipos.
-- [ ] Destalles tipo.
-- [ ] Listado movimientos.
-- [ ] Destalles movimiento.
+- [X] Listado pokemons.
+- [X] Destalles pokemon.
+- [X] Listado tipos.
+- [X] Destalles tipo.
+- [X] Listado movimientos.
+- [X] Destalles movimiento.
 - [ ] Listado habilidades.
 - [ ] Destalles habilidad.
 - [ ] Test.
