@@ -1,0 +1,19 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    padding: 12px;
+    width: 45%;
+    box-shadow: none !important;
+
+    ion-label {
+      width: 100%;
+    }
+
+    .pokemon-method-wrapper{
+      margin-top: 10px;
+    }
+  }
+}

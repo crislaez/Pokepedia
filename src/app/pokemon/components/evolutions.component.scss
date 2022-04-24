@@ -1,0 +1,28 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    box-shadow: none !important;
+
+    >div{
+      width: 30%;
+
+      ion-avatar{
+        width: 7em;
+        height: 7em;
+        background-image: url('../../../assets/images/pokeball_1.png');
+        background-size: 100% 100%;
+        margin: 0 auto;
+        margin-top: 20px;
+      }
+
+    }
+  }
+}

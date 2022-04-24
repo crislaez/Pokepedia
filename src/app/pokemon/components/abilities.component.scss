@@ -1,0 +1,24 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: none !important;
+
+    ion-label {
+      width: 100%;
+    }
+
+    ion-button{
+      width: 40%;
+      border-radius: 50%;
+    }
+
+  }
+}

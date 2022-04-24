@@ -1,0 +1,37 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    box-shadow: none !important;
+    padding-bottom: 15px;
+
+    @include displays_around();
+
+    .move-div-title{
+      padding-top: 10px;
+      padding-bottom: 10px;
+      width: 100%;
+      @include displays_center();
+
+      ion-button{
+        width: 60%;
+        border-radius: 40px;
+      }
+    }
+
+    .move-div-wrapper{
+      width: 100%;
+
+      .move-div{
+        margin-top: 20px;
+        width: 45%;
+      }
+    }
+
+  }
+}

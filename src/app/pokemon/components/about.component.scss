@@ -1,0 +1,81 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  .info-wrapper{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+
+    .info-wrapper-div{
+      margin-top: 10px;
+      @include displays_around();
+
+      >div{
+        width: 48%;
+      }
+    }
+
+    .info-wrapper-div-stats{
+      margin-top: 10px;
+      @include displays_around();
+      div:nth-child(1){
+        width: 20%;
+      }
+
+      div:nth-child(2){
+        width: 15%;
+      }
+
+      div:nth-child(3){
+        width: 55%;
+        height: 5px;
+        background: #E4E4E4;
+      }
+
+      .progress-bar{
+
+        .progress-bar__fill {
+          height: 5px;
+        }
+      }
+
+    }
+  }
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: none !important;
+
+    ion-button{
+      border-radius: 50%;
+    }
+
+    ion-avatar{
+      width: 7em;
+      height: 7em;
+      background-image: url('../../../assets/images/pokeball_1.png');
+      background-size: 100% 100%;
+      margin: 0 auto;
+      margin-top: 20px;
+    }
+
+  }
+
+  .info-card{
+    height: 80px;
+    align-items: center;
+
+    >div{
+      width: 33%;
+      height: 50px;
+      padding: 5px;
+    }
+  }
+
+
+}

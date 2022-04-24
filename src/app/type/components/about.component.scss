@@ -1,0 +1,27 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: none !important;
+    @include displays_around();
+
+    .card-container {
+      width: 90%;
+      margin: 0 auto;
+
+      ion-chip{
+        width: 30%;
+        text-align: center;
+      }
+
+    }
+
+  }
+}

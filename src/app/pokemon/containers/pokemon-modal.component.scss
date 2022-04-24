@@ -1,0 +1,46 @@
+@import '../../../theme/variables';
+
+
+ion-header{
+  background: $secondary;
+}
+
+.pokemon-banner{
+  width: 100%;
+  height: 300px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+
+  .pokemon-banner-name{
+    width: 100%;
+    font-size: 30px;
+  }
+
+  .pokemon-banner-type{
+    width: 100%;
+    @include displays_around();
+    margin-top: -100px;
+
+    ion-chip{
+      width: 20%;
+      ion-label{
+        margin: 0 auto;
+      }
+    }
+  }
+}
+
+.pokemon-principal-image{
+  width: 20em;
+  height: 20em;
+  margin-top: -180px;
+  // background: $secondary
+}
+
+ion-segment-button {
+  text-transform: capitalize;
+  font-size: 12px;
+}

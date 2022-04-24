@@ -1,0 +1,28 @@
+@import '../../../theme/variables';
+
+:host{
+  width: 100%;
+
+  ion-card{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    box-shadow: none !important;
+
+    .card-container {
+      width: 90%;
+      margin: 0 auto;
+
+      .card-container-wrapper{
+        margin-top: 20px;
+        >div{
+          width: 40%;
+          // @include displays_center();
+        }
+      }
+    }
+
+  }
+}
