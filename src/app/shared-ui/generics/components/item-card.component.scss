@@ -6,27 +6,45 @@
   ion-card{
     min-height: 5em;
 
-    &:before{
-      content: "";
+    .ion-card-pokeball{
       position: absolute;
       width: 5em;
       height: 5em;
-      left: 2%;
-      top: 25%;
+      top: 20px;
       border-radius: 50%;
-      background: rgba(255,255, 255, 0.2);
+      background: none;
+      overflow: hidden;
+      transform: rotate(-20deg);
+
+      &:before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 47%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      &:after{
+        content: "";
+        position: absolute;
+        top: 56%;
+        width: 100%;
+        height: 55%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .ion-card-pokeball-circle{
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        margin-left: 50%;
+        margin-top: 33%;
+        background: rgba(255, 255, 255, 0.2) !important;
+        z-index: 1;
+      }
+
     }
 
-    &:after{
-      content: "";
-      position: absolute;
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      left: 2em;
-      top: 47%;
-      background: rgba(255,255, 255, 0.2);
-    }
 
     >div{
       width: 100%;

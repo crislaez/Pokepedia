@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CoreConfigService } from '@newPokeData/core/services/core-config.service';
+import { Common } from '@newPokeData/shared/utils/models';
 import { forkJoin, Observable, of, throwError } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import { Pokemon, PokemonList, PokemonResponse, PokemonsResponse } from '../models';
@@ -37,8 +38,20 @@ export class PokemonService {
     )
   }
 
-  getPokemon(name: string): Observable<Pokemon>{
-    return this.http.get<PokemonResponse>(`${this.baseURL}pokemon/${name}`).pipe(
+  getPokemonType(id: string): Observable<Common[]>{
+    return this.http.get<PokemonResponse>(`${this.baseURL}pokemon/${id}`).pipe(
+      map((pokemon) => {
+        const types = (pokemon?.types || [])?.map(item => (item?.type))
+        return ( types || []);
+      }),
+      catchError((error) => {
+        return throwError(error)
+      })
+    )
+  }
+
+  getPokemon(id: string): Observable<Pokemon>{
+    return this.http.get<PokemonResponse>(`${this.baseURL}pokemon/${id}`).pipe(
       switchMap((pokemon) => {
         const { species = null, location_area_encounters = null } = pokemon || {};
         const { url = null } = species || {};

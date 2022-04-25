@@ -8,7 +8,7 @@ import { fromPokemon, PokemonActions } from '@newPokeData/shared/pokemon';
 import { PokemonList } from '@newPokeData/shared/pokemon/models';
 import { clearName, getPokemonId, gotToTop } from '@newPokeData/shared/utils/helpers/functions';
 import { Store } from '@ngrx/store';
-import { map, shareReplay, startWith, switchMap } from 'rxjs/operators';
+import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
 import { PokemonModalComponent } from '../containers/pokemon-modal.component';
 
 
@@ -35,9 +35,9 @@ import { PokemonModalComponent } from '../containers/pokemon-modal.component';
     <div class="container components-background-dark">
       <ng-container *ngIf="(info$ | async) as info">
         <ng-container *ngIf="(status$ | async) as status">
-          <ng-container *ngIf="status !== 'pending'; else loader">
+          <ng-container *ngIf="status !== 'pending' || componentStatus?.slice !== 20; else loader">
             <ng-container *ngIf="status !== 'error'; else serverError">
-              <ng-container *ngIf="info?.pokemonList.length > 0; else noData">
+              <ng-container *ngIf="info?.pokemonList.length > 0 ; else noData">
 
                 <app-pokemon-card
                   [pokemonList]="info?.pokemonList"
@@ -97,8 +97,9 @@ export class PokemonPage {
   showButton: boolean = false;
   search = new FormControl('');
 
-  infiniteScrollTrigger = new EventEmitter<{pokedexNumber:string, slice:number, search?:string}>();
-  componentStatus:{pokedexNumber:string, slice:number, search?:string } = {
+  infiniteScrollTrigger = new EventEmitter<{lastPokedexNumber:string, pokedexNumber:string, slice:number, search?:string}>();
+  componentStatus:{lastPokedexNumber:string, pokedexNumber:string, slice:number, search?:string } = {
+    lastPokedexNumber:'0',
     pokedexNumber:'0',
     slice:20
   };
@@ -108,6 +109,11 @@ export class PokemonPage {
 
   info$ = this.infiniteScrollTrigger.pipe(
     startWith(this.componentStatus),
+    tap(({lastPokedexNumber, pokedexNumber}) => {
+      if(lastPokedexNumber !== pokedexNumber){
+        this.store.dispatch(PokemonActions.loadPokemonList({pokedexNumber}))
+      }
+    }),
     switchMap(({slice, search}) =>
       this.store.select(fromPokemon.selectPokemonsList).pipe(
         map(pokemonList => {
@@ -116,10 +122,17 @@ export class PokemonPage {
               ? (pokemonList || [])?.filter(({name}) => name?.toLowerCase()?.includes(search?.toLowerCase()))
               : [...pokemonList];
 
+          this.store.dispatch(PokemonActions.loadPokemonsTypes({pokemonList:pokemonListFilter, slice}))
+
           return{
-            pokemonList: pokemonListFilter?.slice(0, slice),
+            // pokemonList: pokemonListFilter?.slice(0, slice),
             total: pokemonListFilter?.length
           }
+        }),
+        switchMap(({total}) => {
+          return this.store.select(fromPokemon.selectPokemons).pipe(
+            map(pokemonList => ({pokemonList, total}))
+          )
         })
       )
     )
@@ -188,16 +201,15 @@ export class PokemonPage {
         pokedex,
       },
       breakpoints: [0, 0.2, 0.5, 1],
-      initialBreakpoint: 0.4, //modal height
+      initialBreakpoint: 0.2, //modal height
     });
 
     modal.onDidDismiss()
       .then((res) => {
         const { data } = res || {};
         if(!!data){
-          this.componentStatus = { ...data }
-          // this.infiniteScrollTrigger.next(this.componentStatus)
-          this.store.dispatch(PokemonActions.loadPokemonList({pokedexNumber: this.componentStatus.pokedexNumber}))
+          this.componentStatus = { ...data, slice:20, search:'' }
+          this.infiniteScrollTrigger.next(this.componentStatus);
         }
     });
 

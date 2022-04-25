@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { NotificationActions } from '@newPokeData/shared/notification';
+import { getPokemonPokedexNumber } from '@newPokeData/shared/utils/helpers/functions';
 import { EntityStatus } from '@newPokeData/shared/utils/models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, map, switchMap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { forkJoin, of } from 'rxjs';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as PokemonActions from '../actions/pokemon.actions';
 import { PokemonService } from '../services/pokemon.service';
-
 
 @Injectable()
 export class PokemonEffects {
@@ -26,6 +27,34 @@ export class PokemonEffects {
           }),
         )
       )
+    )
+  );
+
+  loadPokemonsTypes$ = createEffect( () =>
+    this.actions$.pipe(
+      ofType(PokemonActions.loadPokemonsTypes),
+      switchMap(({pokemonList, slice}) => {
+        if(pokemonList?.length ===  0 || !pokemonList) return of(PokemonActions.savePokemonsTypes({pokemons:[], error: undefined, status: EntityStatus.Loaded, slice}));
+
+        return forkJoin(
+          (pokemonList?.slice((slice -20), slice))?.map(pokemon => {
+            const id = getPokemonPokedexNumber(pokemon?.url)
+            if(!id) return of(pokemon)
+            return this._pokemon.getPokemonType(id).pipe(
+              map(types => ({...pokemon, types})),
+              catchError(() => of(pokemon))
+            )
+          })
+        ).pipe(
+          map(pokemons => PokemonActions.savePokemonsTypes({pokemons, error: undefined, status: EntityStatus.Loaded, slice})),
+          catchError((error) => {
+            return of(
+              PokemonActions.savePokemonsTypes({pokemons:[], error, status: EntityStatus.Error, slice}),
+              NotificationActions.notificationFailure({message: 'ERRORS.ERROR_LOAD_POKEMON'})
+            )
+          })
+        )
+      })
     )
   );
 
@@ -50,8 +79,8 @@ export class PokemonEffects {
   constructor(
     private actions$: Actions,
     private _pokemon: PokemonService,
-    public toastController: ToastController,
-  ){}
+    public toastController: ToastController
+  ){ }
 
 
 }

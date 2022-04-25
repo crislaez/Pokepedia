@@ -35,7 +35,7 @@ export class FilterModalComponent {
   clearName = clearName;
   getPokemonId = getPokemonId;
   @Input() pokedex: Common[];
-  @Input() componentStatus: { pokedexNumber:string,slice:number };
+  @Input() componentStatus: { lastPokedexNumber?:string, pokedexNumber:string };
 
 
   constructor(
@@ -50,7 +50,8 @@ export class FilterModalComponent {
   changeFilter({detail: {value}}): void{
     this.componentStatus = {
       ...this.componentStatus,
-      pokedexNumber:value
+      lastPokedexNumber : this.componentStatus?.pokedexNumber,
+      pokedexNumber:value,
     }
     this.modalController.dismiss(this.componentStatus);
   }

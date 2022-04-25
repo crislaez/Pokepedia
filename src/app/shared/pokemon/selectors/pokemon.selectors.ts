@@ -11,6 +11,11 @@ export const selectPokemonsList = createSelector(
   (state) => state?.pokemonList
 );
 
+export const selectPokemons = createSelector(
+  selectPokemonState,
+  (state) => state?.pokemons
+);
+
 export const selectPokemonsListStatus = createSelector(
   selectPokemonState,
   (state) => state?.status

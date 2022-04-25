@@ -20,6 +20,12 @@ export interface PokemonList {
   'url'?: string;
 }
 
+export interface Pokemons {
+  'name'?: string;
+  'url'?: string;
+  'types'?:Common[]
+}
+
 export interface PokemonEntries {
   'entry_number'?: number;
   'pokemon_species'?: PokemonList[]

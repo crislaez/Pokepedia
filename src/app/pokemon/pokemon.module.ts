@@ -11,8 +11,8 @@ import { AboutComponent } from './components/about.component';
 import { EncountersComponent } from './components/encounters.component';
 import { EvolutionsComponent } from './components/evolutions.component';
 import { MovesComponent } from './components/moves.component';
-import { PokemonModalComponent } from './containers/pokemon-modal.component';
 import { SpritesComponent } from './components/sprites.component';
+import { PokemonModalComponent } from './containers/pokemon-modal.component';
 import { PokemonPage } from './containers/pokemon.page';
 import { PokemonPageRoutingModule } from './pokemon-routing.module';
 

@@ -4,35 +4,80 @@
   width: 100%;
 
   ion-card{
-    min-height: 10em;
+    min-height: 7em;
 
-    &:before{
-      content: "";
+    .ion-card-pokeball{
       position: absolute;
       width: 5em;
       height: 5em;
-      left: 2%;
-      top: 62%;
+      top: 45px;
       border-radius: 50%;
-      background: rgba(255,255, 255, 0.2);
+      background: none;
+      overflow: hidden;
+      transform: rotate(-20deg);
+
+      &:before{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 47%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      &:after{
+        content: "";
+        position: absolute;
+        top: 56%;
+        width: 100%;
+        height: 55%;
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .ion-card-pokeball-circle{
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        margin-left: 50%;
+        margin-top: 33%;
+        background: rgba(255, 255, 255, 0.2) !important;
+        z-index: 1;
+      }
+
     }
 
-    &:after{
-      content: "";
-      position: absolute;
-      width: 2em;
-      height: 2em;
-      border-radius: 50%;
-      left: 2em;
-      top: 75%;
-      background: rgba(255,255, 255, 0.2);
+    .pokemon-item{
+      padding: 10px;
+      .pokemon-item-title{
+        width: 90%;
+        margin: 0 auto;
+      }
+
+      .pokemon-item-avatar{
+        width: 45%;
+      }
+
+      .pokemon-item-types{
+        width: 45%;
+        margin-top: 10px;
+      }
     }
 
     ion-avatar {
-      width: 7em;
-      height: 7em;
+      width: 4em;
+      height: 4em;
       margin: 0 auto;
       margin-top: 10px;
+    }
+
+    ion-chip{
+      width: 90%;
+      height: 20px;
+      box-shadow: 1px 1px 7px grey;
+
+      ion-label{
+        font-size: 11px;
+        margin: 0 auto;
+      }
     }
   }
 

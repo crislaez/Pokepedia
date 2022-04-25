@@ -21,6 +21,8 @@ API publica PokeApi (https://pokeapi.co/about)
 <hr>
 <img src="https://github.com/crislaez/Pokepedia/blob/master/src/assets/images/pokepedia_9.jpg" />
 <hr>
+<img src="https://github.com/crislaez/Pokepedia/blob/master/src/assets/images/pokepedia_10.jpg" />
+<hr>
 
 
 ### Que hace el proyecto
@@ -34,6 +36,7 @@ Pokepedia es una aplicación hecha en Ionic con la información de todos los pok
 Release date: Abril 22, 2022
 
 - Listado pokemons.
+- Listado pokemon (con tipos).
 - Destalles pokemon.
 - Listado tipos.
 - Destalles tipo.
@@ -44,6 +47,7 @@ Release date: Abril 22, 2022
 ### Roadmap
 
 - [X] Listado pokemons.
+- [X] Listado pokemon (con tipos).
 - [X] Destalles pokemon.
 - [X] Listado tipos.
 - [X] Destalles tipo.

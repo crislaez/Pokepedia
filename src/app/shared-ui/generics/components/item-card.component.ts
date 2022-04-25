@@ -14,6 +14,10 @@ import { Common } from '@newPokeData/shared/utils/models';
 
       (click)="opendModal.next(item)">
 
+      <div class="ion-card-pokeball">
+        <div class="ion-card-pokeball-circle" [ngClass]="getCardrBackground(i)"></div>
+      </div>
+
       <div class="displays-center" >
         <div class="span-text capital-letter text-color-light">{{ sliceText(clearName(item?.name)) }}</div>
       </div>

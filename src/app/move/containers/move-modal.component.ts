@@ -50,6 +50,7 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
 
               <ng-container *ngIf="selected === options?.learnIt">
                 <app-pokemon-card
+                  *ngIf="move?.learned_by_pokemon?.length > 0; else noDataItem"
                   [pokemonList]="move?.learned_by_pokemon"
                   (openPokemondModal)="openPokemondModal($event)">
                 </app-pokemon-card>
@@ -88,6 +89,10 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
   <!-- IS NO DATA  -->
   <ng-template #noData>
     <app-empty-modal [title]="'COMMON.NORESULT'" (dismiss)="dismiss()" [image]="'assets/images/empty.png'" [top]="'30vh'"> </app-empty-modal>
+  </ng-template>
+
+  <ng-template #noDataItem>
+    <app-no-data [title]="'COMMON.NORESULT'" [image]="'assets/images/empty.png'" [top]="'30vh'"></app-no-data>
   </ng-template>
 
   <!-- LOADER  -->
@@ -143,7 +148,6 @@ export class MoveModalComponent {
     switchMap(({pokemonSlice}) =>
       this.store.select(fromMove.selectMove).pipe(
         map((move) => {
-          console.log(move)
           return {
             ...move,
             learned_by_pokemon: (move?.learned_by_pokemon || [])?.slice(0, pokemonSlice),
