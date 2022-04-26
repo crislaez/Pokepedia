@@ -34,7 +34,7 @@ export const reducer = createReducer(
   on(AbilityActions.loadAbilitiesList, (state) => ({ ...state, error: undefined, status: EntityStatus.Pending })),
   on(AbilityActions.saveAbilitiesList, (state, { abilitiesList, error, count, status }) => ({...state, abilitiesList, count, error, status })),
 
-  on(AbilityActions.loadAbility, (state) => ({ ...state, moveError: undefined,  moveStatus: EntityStatus.Pending })),
-  on(AbilityActions.saveAbility, (state, { ability, error, status }) => ({...state, ability, moveError: error, moveStatus: status })),
+  on(AbilityActions.loadAbility, (state) => ({ ...state, abilityError: undefined,  abilityStatus: EntityStatus.Pending })),
+  on(AbilityActions.saveAbility, (state, { ability, error, status }) => ({...state, ability, abilityError: error, abilityStatus: status })),
 );
 

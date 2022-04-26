@@ -63,17 +63,17 @@ export class AppComponent {
     map((event: NavigationEnd) => {
       const { url = ''} = event || {}
       let route = url?.split('/')[1];
-      console.log(route)
       if(route === 'pokemon') return {route, label:'COMMON.POKEMON'};
       if(route === 'move') return {route, label:'COMMON.MOVES_TITLE'};
       if(route === 'type') return {route, label:'COMMON.TYPES_TITLE'};
+      if(route === 'ability') return {route, label:'COMMON.ABILITIES_TITLE'};
       return {route:route || 'home', label:'COMMON.POKEMON_TITLE'};
     })
   );
 
   links = [
     {id:1, link:'pokemon', text:'COMMON.POKEMON'},
-    // {id:2, link:'ability', text:'COMMON.ABILITIES_TITLE'},
+    {id:2, link:'ability', text:'COMMON.ABILITIES_TITLE'},
     {id:3, link:'move', text:'COMMON.MOVES_TITLE'},
     {id:4, link:'type', text:'COMMON.TYPES_TITLE'}
   ];

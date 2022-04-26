@@ -6,9 +6,15 @@ import { AbilityModule } from '@newPokeData/shared/ability/ability.module';
 import { SharedModule } from '@newPokeData/shared/shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { AbilityPageRoutingModule } from './ability-routing.module';
+import { AboutComponent } from './components/about.component';
+import { AbilityModalComponent } from './containers/ability-modal.component';
 import { AbilityPage } from './containers/ability.page';
 
-
+const COMPONENTS = [
+  AbilityPage,
+  AbilityModalComponent,
+  AboutComponent
+]
 @NgModule({
   imports: [
     CommonModule,
@@ -19,6 +25,8 @@ import { AbilityPage } from './containers/ability.page';
     TranslateModule.forChild(),
     AbilityPageRoutingModule
   ],
-  declarations: [AbilityPage]
+  declarations: [
+    ...COMPONENTS
+  ]
 })
 export class AbilityPageModule {}

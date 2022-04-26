@@ -23,8 +23,7 @@ export class AbilityService {
     return this.http.get<AbilityResponse>(`${this.baseURL}ability?limit=-1`).pipe(
       map((response) => {
         const { results = null, count = null } = response || {};
-
-        return ( {abilitiesList: results || [], count: count});
+        return {abilitiesList: results || [], count: count};
       }),
       catchError((error) => {
         return throwError(error)
@@ -33,8 +32,13 @@ export class AbilityService {
   }
 
   getAbility(id: string): Observable<Ability>{
-    return this.http.get<Ability>(`${this.baseURL}ability/${id}`).pipe(
-      map((ability) => ( ability || {})),
+    return this.http.get<any>(`${this.baseURL}ability/${id}`).pipe(
+      map((ability) => {
+        return {
+          ...(ability ?? {}),
+          ...( ability?.pokemon?.length > 0 ? { pokemon: (ability?.pokemon || [])?.map(({pokemon}) => (pokemon)) } : {})
+        }
+      }),
       catchError((error) => {
         return throwError(error)
       })

@@ -34,11 +34,12 @@
       }
 
       .ion-card-pokeball-circle{
-        width: 2em;
-        height: 2em;
+        position: absolute;
+        width: 1.5em;
+        height: 1.5em;
         border-radius: 50%;
         margin-left: 50%;
-        margin-top: 33%;
+        margin-top: 35%;
         background: rgba(255, 255, 255, 0.2) !important;
         z-index: 1;
       }

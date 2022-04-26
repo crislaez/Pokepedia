@@ -6,6 +6,7 @@ import { clearName, errorImage, getClassColorType, getPokemonImage, getPokemonPo
 import { Common } from '@newPokeData/shared/utils/models';
 import { Store } from '@ngrx/store';
 import { switchMap, tap } from 'rxjs/operators';
+import { AbilityModalComponent } from 'src/app/ability/containers/ability-modal.component';
 import { MoveModalComponent } from 'src/app/move/containers/move-modal.component';
 import { TypeModalComponent } from 'src/app/type/containers/type-modal.component';
 
@@ -72,7 +73,8 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
 
               <ng-container *ngIf="selected === options?.abilities">
                 <app-abilities
-                  [pokemon]="pokemon">
+                  [pokemon]="pokemon"
+                  (openAbilityModal)="openAbilityModal($event)">
                 </app-abilities>
               </ng-container>
 
@@ -236,35 +238,30 @@ export class PokemonModalComponent {
 
   // SHOW SINGLE CARD
   async openPokemonModal(pokemon: PokemonList) {
-    this.dismiss();
-    const modal = await this.modalController.create({
-      component: PokemonModalComponent,
-      componentProps:{
-        pokemon
-      }
-    });
-    return await modal.present();
+    await this.commonOpenModal('pokemon', pokemon, PokemonModalComponent);
   }
 
   // SHOW SINGLE CARD
   async openMovedModal(move: Common) {
-    this.dismiss();
-    const modal = await this.modalController.create({
-      component: MoveModalComponent,
-      componentProps:{
-        move
-      }
-    });
-    return await modal.present();
+    await this.commonOpenModal('move', move, MoveModalComponent);
   }
 
   // SHOW SINGLE CARD
   async openTypeModal(type: Common) {
+    await this.commonOpenModal('type', type, TypeModalComponent);
+  }
+
+  // SHOW SINGLE CARD
+  async openAbilityModal(ability: Common) {
+    await this.commonOpenModal('ability', ability, AbilityModalComponent);
+  }
+
+  async commonOpenModal(paramsKey: string, params: Common, component: any) {
     this.dismiss();
     const modal = await this.modalController.create({
-      component: TypeModalComponent,
+      component,
       componentProps:{
-        type
+        [paramsKey]:params
       }
     });
     return await modal.present();

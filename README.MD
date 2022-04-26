@@ -42,7 +42,8 @@ Release date: Abril 22, 2022
 - Destalles tipo.
 - Listado movimientos.
 - Destalles movimiento.
-
+- Listado habilidades.
+- Destalles habilidad.
 
 ### Roadmap
 
@@ -53,8 +54,8 @@ Release date: Abril 22, 2022
 - [X] Destalles tipo.
 - [X] Listado movimientos.
 - [X] Destalles movimiento.
-- [ ] Listado habilidades.
-- [ ] Destalles habilidad.
+- [X] Listado habilidades.
+- [X] Destalles habilidad.
 - [ ] Test.
 
 ### Donde pueden recibir ayuda los usuarios con el proyecto

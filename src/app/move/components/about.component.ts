@@ -18,7 +18,7 @@ import { Common } from '@newPokeData/shared/utils/models';
           <div>{{ 'COMMON.TYPE_TITLE' | translate }}:</div>
           <div *ngIf="move?.type?.name; else noItem" class="text-color-dark-light" (click)="openTypeModal.next(move?.type)">
             <ion-chip [ngClass]="getClassColor(move?.type?.name)" >
-              {{ move?.type?.name }}
+              <ion-label>{{ move?.type?.name}}</ion-label>
             </ion-chip>
           </div>
         </div>

@@ -7,6 +7,6 @@ export enum EntityStatus {
 
 
 export interface Common {
-  'name': string;
-  'url': string;
+  'name'?: string;
+  'url'?: string;
 }

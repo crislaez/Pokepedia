@@ -16,6 +16,18 @@ export interface Ability {
   "is_main_series"?: boolean;
   "name"?: string;
   "names"?: AbilityNames[],
+  "pokemon"?: Common[];
+}
+
+export interface AbilityResponse {
+  "effect_changes"?: EffectChanges[];
+  "effect_entries"?: EffectEntries[];
+  "flavor_text_entries"?: FlavorTextEntries[];
+  "generation"?: Common;
+  "id"?: number;
+  "is_main_series"?: boolean;
+  "name"?: string;
+  "names"?: AbilityNames[],
   "pokemon"?: AbilityPokemon[];
 }
 

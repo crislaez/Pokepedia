@@ -1,36 +1,37 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, ViewChild } from '@angular/core';
 import { IonContent, ModalController } from '@ionic/angular';
-import { fromMove, MoveActions } from '@newPokeData/shared/move';
+import { AbilityActions, fromAbility } from '@newPokeData/shared/ability';
 import { PokemonList } from '@newPokeData/shared/pokemon';
 import { clearName, getClassColor, getPokemonPokedexNumber, gotToTop, trackById } from '@newPokeData/shared/utils/helpers/functions';
-import { Common } from '@newPokeData/shared/utils/models';
+import { Common } from '@newPokeData/shared/utils/models/index';
 import { Store } from '@ngrx/store';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { EMPTY } from 'rxjs';
+import { filter, map, switchMap, tap } from 'rxjs/operators';
 import { PokemonModalComponent } from 'src/app/pokemon/containers/pokemon-modal.component';
-import { TypeModalComponent } from 'src/app/type/containers/type-modal.component';
+
 
 @Component({
-  selector: 'app-move-modal',
+  selector: 'app-ability-modal',
   template:`
-  <ng-container *ngIf="(move$ | async) as move">
+  <ng-container *ngIf="(ability$ | async) as ability">
     <ng-container *ngIf="(status$ | async) as status">
       <ng-container *ngIf="status !== 'pending'; else loader">
         <ng-container *ngIf="status !== 'error'; else serverError">
 
           <!-- HEADER  -->
-          <ion-header class="ion-no-border" [ngClass]="getClassColor(move?.type?.name)" >
+          <ion-header class="ion-no-border ability" >
             <ion-toolbar>
               <ion-buttons class="text-color-dark" slot="end">
-                <ion-button [ngClass]="getClassColor(move?.type?.name)" (click)="dismiss()"><ion-icon fill="clear" class="text-color-light" name="close-outline"></ion-icon></ion-button>
+                <ion-button (click)="dismiss()"><ion-icon fill="clear" class="text-color-light ability" name="close-outline"></ion-icon></ion-button>
               </ion-buttons>
             </ion-toolbar>
           </ion-header>
 
           <!-- MAIN  -->
           <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="logScrolling($any($event))">
-            <div class="type-banner displays-center" [ngClass]="getClassColor(move?.type?.name)">
+            <div class="type-banner displays-center ability" [ngClass]="">
               <div class="type-banner-name capital-letter">
-                {{ clearName(move?.name) }}
+                {{ clearName(ability?.name) }}
               </div>
             </div>
 
@@ -43,22 +44,22 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
 
               <ng-container *ngIf="selected === options?.about">
                 <app-about
-                  [move]="move"
-                  (openTypeModal)="openTypeModal($event)">
+                  [ability]="ability">
                 </app-about>
               </ng-container>
 
               <ng-container *ngIf="selected === options?.learnIt">
                 <app-pokemon-card
-                  *ngIf="move?.learned_by_pokemon?.length > 0; else noDataItem"
-                  [pokemonList]="move?.learned_by_pokemon"
+                  *ngIf="ability?.pokemon?.length > 0; else noDataItem"
+                  [pokemonList]="ability?.pokemon"
                   (openPokemondModal)="openPokemondModal($event)">
                 </app-pokemon-card>
+
 
                 <!-- INFINITE SCROLL  -->
                 <app-infinite-scroll
                   [slice]="statusComponent?.pokemonSlice"
-                  [total]="move?.totalPokemon"
+                  [total]="ability?.totalPokemon"
                   [status]="status"
                   (loadDataTrigger)="loadData($event)">
                 </app-infinite-scroll>
@@ -104,10 +105,10 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
     </ion-content>
   </ng-template>
   `,
-  styleUrls: ['./move-modal.component.scss'],
+  styleUrls: ['./ability-modal.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class MoveModalComponent {
+export class AbilityModalComponent {
 
   gotToTop = gotToTop;
   clearName = clearName;
@@ -115,17 +116,17 @@ export class MoveModalComponent {
   getClassColor = getClassColor;
   getPokemonPokedexNumber = getPokemonPokedexNumber;
   @ViewChild(IonContent) content: IonContent;
-  @Input() set move(move: Common){
-    const { name = null, url = null } = move || {};
-    this.statusComponent = {...this.statusComponent, moveId:this.getPokemonPokedexNumber(url)};
-    setTimeout(() => {this.chargeMoveInfoTrigger.next(this.statusComponent)},0)
-  };
-
+  @Input() set ability(ability: Common){
+    const { name = null, url = null } = ability || {};
+    this.statusComponent = {...this.statusComponent, abilityId:this.getPokemonPokedexNumber(url)};
+    setTimeout(() => { this.chargeAbilityInfoTrigger.next(this.statusComponent) },0)
+  }
   showButton = false;
   selected = 1;
+
   itemsSegments = [
     {id:1, label:'COMMON.ABOUT'},
-    {id:2, label:'COMMON.LEARN_IT'},
+    {id:2, label:'COMMON.LEARN_IT'}
   ];
 
   options = {
@@ -133,26 +134,26 @@ export class MoveModalComponent {
     learnIt: 2,
   };
 
-  status$ = this.store.select(fromMove.selectMoveStatus);
-  chargeMoveInfoTrigger = new EventEmitter<{moveId:string, url:string, reload:boolean, pokemonSlice?:number}>();
+  status$ = this.store.select(fromAbility.selectAbilityStatus);
+  chargeAbilityInfoTrigger = new EventEmitter<{abilityId:string, url:string, reload:boolean, pokemonSlice?:number}>();
   statusComponent = {
-    moveId:'',
+    abilityId:'',
     url:'',
     reload: true,
     pokemonSlice:20
   };
 
-  move$ = this.chargeMoveInfoTrigger.pipe(
-    tap(({moveId:id, reload}) => {
-      if(id && reload) this.store.dispatch(MoveActions.loadMove({id}))
+  ability$ = this.chargeAbilityInfoTrigger.pipe(
+    tap(({abilityId:id, reload}) => {
+      if(id && reload) this.store.dispatch(AbilityActions.loadAbility({id}))
     }),
     switchMap(({pokemonSlice}) =>
-      this.store.select(fromMove.selectMove).pipe(
-        map((move) => {
+      this.store.select(fromAbility.selectAbility).pipe(
+        map(abilility => {
           return {
-            ...move,
-            learned_by_pokemon: (move?.learned_by_pokemon || [])?.slice(0, pokemonSlice),
-            totalPokemon: move?.learned_by_pokemon?.length
+            ...abilility,
+            pokemon: abilility?.pokemon?.slice(0, pokemonSlice),
+            totalPokemon: abilility?.pokemon?.length
           }
         })
       )
@@ -166,7 +167,6 @@ export class MoveModalComponent {
   ) { }
 
 
-
   segmentChanged({detail:{value}}): void{
     this.selected = Number(value);
   }
@@ -174,8 +174,8 @@ export class MoveModalComponent {
   // REFRESH
   doRefresh(event) {
     setTimeout(() => {
-      this.statusComponent = {...this.statusComponent, reload:true, pokemonSlice: 20}
-      this.chargeMoveInfoTrigger.next(this.statusComponent);
+      this.statusComponent = {...this.statusComponent, reload:true, pokemonSlice: 20};
+      this.chargeAbilityInfoTrigger.next(this.statusComponent);
       event.target.complete();
     }, 500);
   }
@@ -187,7 +187,7 @@ export class MoveModalComponent {
       reload: false,
       pokemonSlice: this.statusComponent.pokemonSlice + 20
     };
-    this.chargeMoveInfoTrigger.next(this.statusComponent);
+    this.chargeAbilityInfoTrigger.next(this.statusComponent);
     event.target.complete();
   }
 
@@ -216,16 +216,6 @@ export class MoveModalComponent {
     return await modal.present();
   }
 
-  // SHOW SINGLE CARD
-  async openTypeModal(type: Common) {
-    this.dismiss();
-    const modal = await this.modalController.create({
-      component: TypeModalComponent,
-      componentProps:{
-        type
-      }
-    });
-    return await modal.present();
-  }
+
 
 }

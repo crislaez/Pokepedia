@@ -90,7 +90,6 @@ export class MovePage  {
 
   status$ = this.store.select(fromMove.selectMoveListStatus)
   infiniteScrollTrigger = new EventEmitter<{slice:number, search?:string}>();
-
   componentStatus = {
     slice:20,
     search:''
@@ -118,7 +117,7 @@ export class MovePage  {
   constructor(
     private store: Store,
     public platform: Platform,
-    public modalController: ModalController,
+    public modalController: ModalController
   ) { }
 
 
