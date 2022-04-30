@@ -4,7 +4,6 @@ import { NotificationActions } from '@newPokeData/shared/notification';
 import { getPokemonPokedexNumber } from '@newPokeData/shared/utils/helpers/functions';
 import { EntityStatus } from '@newPokeData/shared/utils/models';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { Store } from '@ngrx/store';
 import { forkJoin, of } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 import * as PokemonActions from '../actions/pokemon.actions';
@@ -18,7 +17,7 @@ export class PokemonEffects {
       ofType(PokemonActions.loadPokemonList),
       switchMap( ({pokedexNumber}) =>
         this._pokemon.getPokemons(pokedexNumber).pipe(
-          map( ({pokemonList, count}) => PokemonActions.savePokemonList({ pokedexNumber, pokemonList, error: undefined, count, status: EntityStatus.Loaded})),
+          map( ({pokemonList, count}) => PokemonActions.savePokemonList({ pokedexNumber, pokemonList, error: undefined, count, status: EntityStatus.Pending})), //Loaded
           catchError( (error) => {
             return of(
               PokemonActions.savePokemonList({pokedexNumber, pokemonList: [], error, count:0, status: EntityStatus.Error }),

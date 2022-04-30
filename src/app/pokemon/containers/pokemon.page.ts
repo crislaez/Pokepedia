@@ -8,7 +8,7 @@ import { fromPokemon, PokemonActions } from '@newPokeData/shared/pokemon';
 import { PokemonList } from '@newPokeData/shared/pokemon/models';
 import { clearName, getPokemonId, gotToTop } from '@newPokeData/shared/utils/helpers/functions';
 import { Store } from '@ngrx/store';
-import { map, shareReplay, startWith, switchMap, tap } from 'rxjs/operators';
+import { map, shareReplay, startWith, switchMap } from 'rxjs/operators';
 import { PokemonModalComponent } from '../containers/pokemon-modal.component';
 
 
@@ -109,29 +109,24 @@ export class PokemonPage {
 
   info$ = this.infiniteScrollTrigger.pipe(
     startWith(this.componentStatus),
-    tap(({lastPokedexNumber, pokedexNumber}) => {
-      if(lastPokedexNumber !== pokedexNumber){
-        this.store.dispatch(PokemonActions.loadPokemonList({pokedexNumber}))
-      }
-    }),
     switchMap(({slice, search}) =>
       this.store.select(fromPokemon.selectPokemonsList).pipe(
         map(pokemonList => {
+          slice = this.componentStatus?.lastPokedexNumber !== this.componentStatus?.pokedexNumber
+                ? this.componentStatus?.slice
+                : slice;
 
           const pokemonListFilter = search
               ? (pokemonList || [])?.filter(({name}) => name?.toLowerCase()?.includes(search?.toLowerCase()))
               : [...pokemonList];
 
-          this.store.dispatch(PokemonActions.loadPokemonsTypes({pokemonList:pokemonListFilter, slice}))
+          if(pokemonListFilter?.length > 0) this.store.dispatch(PokemonActions.loadPokemonsTypes({pokemonList:pokemonListFilter, slice}))
 
-          return{
-            // pokemonList: pokemonListFilter?.slice(0, slice),
-            total: pokemonListFilter?.length
-          }
+          return{ total: pokemonListFilter?.length }
         }),
         switchMap(({total}) => {
           return this.store.select(fromPokemon.selectPokemons).pipe(
-            map(pokemonList => ({pokemonList, total}))
+            map(pokemonList => ({pokemonList: total !== 0 ? pokemonList : [], total}))
           )
         })
       )
@@ -209,7 +204,8 @@ export class PokemonPage {
         const { data } = res || {};
         if(!!data){
           this.componentStatus = { ...data, slice:20, search:'' }
-          this.infiniteScrollTrigger.next(this.componentStatus);
+          this.store.dispatch(PokemonActions.loadPokemonList({pokedexNumber: this.componentStatus?.pokedexNumber}))
+          // this.infiniteScrollTrigger.next(this.componentStatus);
         }
     });
 
