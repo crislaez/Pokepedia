@@ -27,7 +27,7 @@ API publica PokeApi (https://pokeapi.co/about)
 
 ### Que hace el proyecto
 
-Pokepedia es una aplicación hecha en Ionic con la información de todos los pokemon, tipos de movimientos, tipos elementales y habilidades. Tambien tiene buscadores y filtro por pokedex (En construcción)...
+Pokepedia es una aplicación hecha en Ionic con la información de todos los pokemon, tipos de movimientos, tipos elementales , habilidades y movimientos. Tambien tiene buscadores y filtro por pokedex.
 
 ### Versiones
 
