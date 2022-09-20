@@ -12,7 +12,7 @@ import { errorImage, clearName, trackById } from '@newPokeData/shared/utils/help
           <div class="displays-center margin-top-10 width-max">
             <ion-label class="capital-letter span-bold text-color-dark">{{'COMMON.POKEMON_TITLE' | translate }}: {{ clearName(other) }}</ion-label>
           </div>
-          <ng-container *ngFor="let sprite of spriteFields">
+          <ng-container *ngFor="let sprite of spriteFields; trackBy: trackById">
             <img *ngIf="pokemon.sprites?.other?.[other]?.[sprite] as image" class="card-pokemon-image" [src]="image" [alt]="image" (error)="errorImage($event)">
           </ng-container>
         </ion-card>

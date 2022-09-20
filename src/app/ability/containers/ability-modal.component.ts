@@ -5,8 +5,7 @@ import { PokemonList } from '@newPokeData/shared/pokemon';
 import { clearName, getClassColor, getPokemonPokedexNumber, gotToTop, trackById } from '@newPokeData/shared/utils/helpers/functions';
 import { Common } from '@newPokeData/shared/utils/models/index';
 import { Store } from '@ngrx/store';
-import { EMPTY } from 'rxjs';
-import { filter, map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap } from 'rxjs/operators';
 import { PokemonModalComponent } from 'src/app/pokemon/containers/pokemon-modal.component';
 
 
@@ -30,7 +29,7 @@ import { PokemonModalComponent } from 'src/app/pokemon/containers/pokemon-modal.
           <!-- MAIN  -->
           <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="logScrolling($any($event))">
             <div class="type-banner displays-center ability" [ngClass]="">
-              <div class="type-banner-name capital-letter">
+              <div class="type-banner-name capital-letter text-color-light">
                 {{ clearName(ability?.name) }}
               </div>
             </div>

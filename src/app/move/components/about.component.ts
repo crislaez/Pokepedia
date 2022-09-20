@@ -18,7 +18,7 @@ import { Common } from '@newPokeData/shared/utils/models';
           <div>{{ 'COMMON.TYPE_TITLE' | translate }}:</div>
           <div *ngIf="move?.type?.name; else noItem" class="text-color-dark-light" (click)="openTypeModal.next(move?.type)">
             <ion-chip [ngClass]="getClassColor(move?.type?.name)" >
-              <ion-label>{{ move?.type?.name}}</ion-label>
+              <ion-label class="text-color-light">{{ move?.type?.name}}</ion-label>
             </ion-chip>
           </div>
         </div>
@@ -27,7 +27,7 @@ import { Common } from '@newPokeData/shared/utils/models';
           class="card-container-wrapper displays-between"
           *ngFor="let item of getIterateItems(); trackBy: trackById">
           <div>{{ item?.label | translate }}:</div>
-          <div *ngIf="item?.field; else noItem"  class="text-color-dark-light">{{ item?.field }}</div>
+          <div *ngIf="item?.field; else noItem" class="text-color-dark-light">{{ item?.field }}</div>
         </div>
 
         <div *ngIf="move?.stat_changes?.length > 0" class="card-container-wrapper displays-between">

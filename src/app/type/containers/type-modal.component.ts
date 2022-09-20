@@ -3,7 +3,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, ViewChild } fr
 import { IonContent, ModalController } from '@ionic/angular';
 import { PokemonList } from '@newPokeData/shared/pokemon';
 import { fromType, TypeActions } from '@newPokeData/shared/type';
-import { clearName, emptyObject, getClassColor, getPokemonPokedexNumber, gotToTop } from '@newPokeData/shared/utils/helpers/functions';
+import { clearName, emptyObject, getClassColor, getPokemonPokedexNumber, gotToTop, trackById } from '@newPokeData/shared/utils/helpers/functions';
 import { Common } from '@newPokeData/shared/utils/models';
 import { Store } from '@ngrx/store';
 import { map, switchMap, tap } from 'rxjs/operators';
@@ -36,14 +36,14 @@ interface Slices{
             <!-- MAIN  -->
             <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="logScrolling($any($event))">
               <div class="type-banner displays-center" [ngClass]="getClassColor(type?.name)">
-                <div class="type-banner-name capital-letter">
+                <div class="type-banner-name capital-letter text-color-light">
                   {{ clearName(type?.name) }}
                 </div>
               </div>
 
               <div class="container components-background-dark" >
                 <ion-segment (ionChange)="segmentChanged($any($event))" [(ngModel)]="selected">
-                  <ion-segment-button *ngFor="let item of itemsSegments; let i = index;" [value]="item?.id" class="text-color-dark components-background-dark">
+                  <ion-segment-button *ngFor="let item of itemsSegments; let i = index; trackBy: trackById" [value]="item?.id" class="text-color-dark components-background-dark">
                     <ion-label>{{ item?.label | translate }}</ion-label>
                   </ion-segment-button>
                 </ion-segment>
@@ -130,6 +130,7 @@ export class TypeModalComponent {
 
   gotToTop = gotToTop;
   clearName = clearName;
+  trackById = trackById;
   emptyObject = emptyObject;
   getClassColor = getClassColor;
   getPokemonPokedexNumber = getPokemonPokedexNumber;

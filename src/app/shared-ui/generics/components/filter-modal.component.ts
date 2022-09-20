@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { clearName, getPokemonId } from '@newPokeData/shared/utils/helpers/functions';
+import { clearName, getPokemonId, trackById } from '@newPokeData/shared/utils/helpers/functions';
 import { Common } from '@newPokeData/shared/utils/models';
 
 
@@ -21,7 +21,7 @@ import { Common } from '@newPokeData/shared/utils/models';
         <ion-label>{{'COMMON.POKEDEX' | translate}}</ion-label>
         <ion-select (ionChange)="changeFilter($any($event))" [value]="componentStatus?.pokedexNumber" interface="action-sheet">
           <ion-select-option value="0">{{'COMMON.EVERYONE' | translate}}</ion-select-option>
-          <ion-select-option *ngFor="let format of pokedex" [value]="getPokemonId(format?.url)">{{ clearName(format?.name) }}</ion-select-option>
+          <ion-select-option *ngFor="let format of pokedex; trackBy: trackById" [value]="getPokemonId(format?.url)">{{ clearName(format?.name) }}</ion-select-option>
         </ion-select>
       </ion-item>
     </div>
@@ -33,6 +33,7 @@ import { Common } from '@newPokeData/shared/utils/models';
 export class FilterModalComponent {
 
   clearName = clearName;
+  trackById = trackById;
   getPokemonId = getPokemonId;
   @Input() pokedex: Common[];
   @Input() componentStatus: { lastPokedexNumber?:string, pokedexNumber:string };

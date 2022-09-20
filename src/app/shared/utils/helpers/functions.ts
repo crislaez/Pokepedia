@@ -2,7 +2,7 @@ import { IonContent } from "@ionic/angular";
 import { Pokemon } from "@newPokeData/shared/pokemon";
 
 export const trackById = (_: number, item: any): number => {
-  return item.id;
+  return item?.id ?? item?.name ?? item ;
 }
 
 export const errorImage = (event): void => {
@@ -34,7 +34,7 @@ export const sliceLongText = (text: string) => {
 }
 
 export const getPrincipalImage = (url: string): string => {
-  const pokemonId =  getPokemonPokedexNumber(url)
+  const pokemonId = getPokemonPokedexNumber(url);
   return pokemonId ? `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png` : '';
 }
 

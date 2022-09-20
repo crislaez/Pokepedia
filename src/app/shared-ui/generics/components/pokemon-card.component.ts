@@ -18,8 +18,8 @@ import { clearName, errorImage, getCardrBackground, getPokedexNumber, getClassCo
         </div>
 
         <div class="pokemon-item-types">
-          <ion-chip *ngFor="let type of pokemon?.types" [ngClass]="getClassColor(type?.name)">
-            <ion-label>{{ type?.name }}</ion-label>
+          <ion-chip *ngFor="let type of pokemon?.types; trackBy: trackById" [ngClass]="getClassColor(type?.name)">
+            <ion-label class="text-color-light">{{ type?.name }}</ion-label>
           </ion-chip>
         </div>
 

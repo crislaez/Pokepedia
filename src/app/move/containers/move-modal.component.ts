@@ -29,7 +29,7 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
           <!-- MAIN  -->
           <ion-content [fullscreen]="true" [scrollEvents]="true" (ionScroll)="logScrolling($any($event))">
             <div class="type-banner displays-center" [ngClass]="getClassColor(move?.type?.name)">
-              <div class="type-banner-name capital-letter">
+              <div class="type-banner-name capital-letter text-color-light">
                 {{ clearName(move?.name) }}
               </div>
             </div>

@@ -34,7 +34,8 @@ import { filter, map } from 'rxjs/operators';
       </ion-header>
 
       <ion-content >
-        <ion-item lines="none" class="text-color-dark" *ngFor="let item of links;  trackBy: trackById" [routerLink]="['/'+item?.link]" (click)="openEnd()">{{ item?.text | translate }}</ion-item>
+        <!-- lines="none" -->
+        <ion-item class="text-color-dark" detail *ngFor="let item of links; trackBy: trackById" [routerLink]="['/'+item?.link]" (click)="openEnd()">{{ item?.text | translate }}</ion-item>
       </ion-content >
     </ion-menu>
 

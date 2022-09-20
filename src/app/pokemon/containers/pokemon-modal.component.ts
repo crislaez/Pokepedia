@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, ViewChild } fr
 import { IonContent, ModalController, Platform } from '@ionic/angular';
 import { fromPokemon, PokemonActions } from '@newPokeData/shared/pokemon';
 import { Pokemon, PokemonList } from '@newPokeData/shared/pokemon/models';
-import { clearName, errorImage, getClassColorType, getPokemonImage, getPokemonPokedexNumber, gotToTop } from '@newPokeData/shared/utils/helpers/functions';
+import { clearName, errorImage, getClassColorType, getPokemonImage, getPokemonPokedexNumber, gotToTop, trackById } from '@newPokeData/shared/utils/helpers/functions';
 import { Common } from '@newPokeData/shared/utils/models';
 import { Store } from '@ngrx/store';
 import { switchMap, tap } from 'rxjs/operators';
@@ -41,11 +41,12 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
               </div>
 
               <div class="pokemon-banner-type">
-                <ion-chip *ngFor="let type of getPokemonTypes(pokemon)"
+                <ion-chip
+                  *ngFor="let type of getPokemonTypes(pokemon); trackBy: trackById"
+                  class="text-color-light"
                   [ngStyle]="{'box-shadow':type?.name === 'dark' ? '0px 0px 10px white' : '0px 0px 10px gray' }"
                   [ngClass]="type?.name"
                   (click)="openTypeModal(type)">
-
                   <ion-label>{{ type?.name }}</ion-label>
                 </ion-chip>
               </div>
@@ -59,7 +60,7 @@ import { TypeModalComponent } from 'src/app/type/containers/type-modal.component
               </div>
 
               <ion-segment scrollable (ionChange)="segmentChanged($any($event))" [(ngModel)]="selected">
-                <ion-segment-button *ngFor="let item of itemsSegments; let i = index;" [value]="item?.id" class="text-color-dark components-background-dark">
+                <ion-segment-button *ngFor="let item of itemsSegments; let i = index; trackBy: trackById" [value]="item?.id" class="text-color-dark components-background-dark">
                   <ion-label>{{ item?.label | translate }}</ion-label>
                 </ion-segment-button>
               </ion-segment>
@@ -147,6 +148,7 @@ export class PokemonModalComponent {
 
   gotToTop = gotToTop;
   clearName = clearName;
+  trackById = trackById;
   errorImage = errorImage;
   getPokemonImage = getPokemonImage;
   getClassColorType = getClassColorType;

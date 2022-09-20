@@ -1,12 +1,11 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { clearName, errorImage, getCardrBackground, getPokedexNumber, getClassColor, getPrincipalImage, sliceText, trackById } from '@newPokeData/shared/utils/helpers/functions';
+import { clearName, errorImage, getCardrBackground, getClassColor, getPokedexNumber, getPrincipalImage, sliceText, trackById } from '@newPokeData/shared/utils/helpers/functions';
 import { Common } from '@newPokeData/shared/utils/models';
 
 @Component({
   selector: 'app-item-card',
   template:`
   <div class="displays-around">
-  <!-- [ngClass]="getCardrBackground(i)"  -->
     <ion-card
       *ngFor="let item of moveList; let i = index; trackBy: trackById"
       class="ion-activatable ripple-parent fade-in-image"

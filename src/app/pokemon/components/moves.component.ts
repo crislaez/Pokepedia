@@ -7,7 +7,7 @@ import { Common } from '@newPokeData/shared/utils/models';
   selector: 'app-moves',
   template:`
     <div *ngIf="pokemon?.moves?.length > 0; else noData">
-      <ion-card *ngFor="let move of pokemon?.moves">
+      <ion-card *ngFor="let move of pokemon?.moves; trackBy: trackById">
 
         <div class="move-div-title">
           <!-- [routerLink]="['move/'+move?.move?.name]" -->
